@@ -4,23 +4,6 @@
 # 01 feb. 2016
 ########################
 
-
-# Fichier Makefile racine
-# Cette variable contient la liste des sous répertoires pour lesquels il faudra construire un programme.
-# Pour l’instant, seul le serveur web est dans la liste.
-
-FOLDERS = webserver
-# Indique à make les règles qui ne correspondent pas à la création d’un fichier make lancera toujours la construction de cette règle si elle est demandée, même si un fichier/répertoire du nom de la cible existe
-# On indique ici la règle all ainsi que les répertoires
-.PHONY : all $(FOLDERS)
-
-# La règle qui sera exécutée si on lance make sans argument
-all : $(FOLDERS)
-
-# Cette règle va lancer make dans le répertoire webserver option -C de make
-webserver :
-	make -C webserver
-
 # Ces variables servent à préciser le compilateur que l’on veut utiliser
 # ainsi que les paramètres de compilation
 CC = gcc
@@ -41,15 +24,15 @@ CFILES = $(wildcard *.c)
 # Cette construction de variable veut dire: remplacer la chaine ".c" par
 # ".o" dans la variable CFILES
 # Ceci nous permet de construire la liste des fichiers .o à fabriquer
-OBJS = $(CFILES :.c =.o)
+OBJS = $(CFILES:.c=.o)
 
 # Même utilisation que précédemment. On précise les règles qui
 # ne fabrique pas de fichier du nom de leur cible
-.PHONY : all clean mrproper
+.PHONY: all clean mrproper
 
 # La règle par défaut déclenche la fabrication de l’exécutable
 # par dépendance
-all : $(EXE)
+all: $(EXE)
 
 # Cette règle permet de construire l’exécutable. Elle dépend des fichiers
 # .o et effectue l’édition de lien. Rien de nouveau ici
@@ -61,15 +44,17 @@ $(EXE): $(OBJS)
 # tous les fichiers .c qui incluent ce fichier sont recompilés
 # Après votre première compilation, regardez le contenu du fichier
 # makefile.dep généré afin de comprendre exactement de quoi il retourne.
-makefile.dep : $(CFILES) $(HEADERS)
+makefile.dep: $(CFILES) $(HEADERS)
 	$(CC) -MM $(CFILES) > $@
 
 # Cette règle efface le fichier de dépendances et les fichiers .o
-clean :
+clean:
 	$(RM) $(OBJS) makefile.dep
+
 # Cette règle effectue la précédente et efface en plus l’exécutable
-mrproper : clean
+mrproper: clean
 	$(RM) $(EXE)
+
 # On inclue le fichier de dépendance qui va contenir les règles
 # de construction des fichiers .o
 
