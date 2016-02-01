@@ -5,10 +5,10 @@
  * socket.c
 ***********************/
 
+
+
 #include "socket.h"
 
-int socket(int domain, int type, int protocol) {
-
+int creer_serveur(int port) {
     return 0;
 }
-
