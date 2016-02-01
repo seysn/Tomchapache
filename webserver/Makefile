@@ -25,18 +25,18 @@ webserver :
 # ainsi que les paramètres de compilation
 CC = gcc
 LD = gcc
-CFLAGS = - Wall -W - Werror
+CFLAGS = -Wall -W -Werror
 LDFLAGS =
 
 # Le nom de l’exécutable à fabriquer
-EXE = Tomchapache
+EXE = tomchapache
 
 # Les variables HEADERS, CFILES et OBJS vont contenir respectivement
 # la listes des fichiers .h, .c et le nom des fichiers .o à fabriquer
 # On utilise la directive particulière $(wildcard ...) qui permet
 # de construire automatiquement une liste de fichiers
-HEADERS = $(wildcard *.h )
-CFILES = $(wildcard *.c )
+HEADERS = $(wildcard *.h)
+CFILES = $(wildcard *.c)
 
 # Cette construction de variable veut dire: remplacer la chaine ".c" par
 # ".o" dans la variable CFILES
@@ -54,7 +54,7 @@ all : $(EXE)
 # Cette règle permet de construire l’exécutable. Elle dépend des fichiers
 # .o et effectue l’édition de lien. Rien de nouveau ici
 $(EXE): $(OBJS)
-$(LD) $^ $(LDFLAGS) -o $@
+	$(LD) $^ $(LDFLAGS) -o $@
 
 # Cette règle permet de construire automatiquement les règles de compilation pour chacun des fichiers .c l’option -MM de gcc analyse un fichier .c et affiche sur sa sortie standard une règle compatible make pour le compiler.
 # Ceci permet d’ajouter automatiquement les fichiers .h aux dépendances des fichiers .o à construire. Ainsi, en modifiant un fichier .h
