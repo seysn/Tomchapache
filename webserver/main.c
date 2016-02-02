@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 
@@ -14,9 +16,24 @@
 
 int main() 
 {
-    if(creer_serveur(8080) < 0) 
-    {
-        printf("REKT");
+    int socket_serveur, socket_client;
+    if((socket_serveur = creer_serveur(8080)) == EXIT_FAILURE) {
+	return EXIT_FAILURE;
     }
-  	return 0;
+
+    socket_client = accept(socket_serveur, NULL, NULL);
+    if (socket_client == -1) {
+	perror("accept");
+	return EXIT_FAILURE;
+    }
+
+    /* On peut maintenant dialoguer avec le client */
+    const char * message_bienvenue = "Bonjour, bienvenue sur mon serveur\n";
+    write(socket_client, message_bienvenue, strlen(message_bienvenue));
+
+    while (1) {
+	// TODO
+    }
+
+    return EXIT_SUCCESS;
 }
