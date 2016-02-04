@@ -1,0 +1,4 @@
+Question 1: Si on quitte le serveur et on le relance, tout ce passe normalement.
+Question 2: Si l'on ajoute un délai avant l'envoi, et qu'on execute la commande "nc -z 127.0.0.1 8080" le message ne bienvenu ne s'affiche pas et la connexion se ferme.
+Question 3: Quand on lance la commande telnet on obtient l'erreur "Trying ::1... telnet: Unable to connect to remote host: Connection refused"
+Question 4: Quand on veut lancer deux clients simultanément, on obtient l'erreur:"bind socker_serveur: Address already in use" car le port est déjà utilisé.
