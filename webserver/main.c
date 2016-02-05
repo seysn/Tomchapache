@@ -22,21 +22,27 @@ int main()
     }
 
     initialiser_signaux();
-    
-    socket_client = accept(socket_serveur, NULL, NULL);
-    if (socket_client == -1) {
-	perror("accept");
-	return EXIT_FAILURE;
-    }
-
-    /* On peut maintenant dialoguer avec le client */
     const char * message_bienvenue = "Bonjour, bienvenue sur le serveur\nle plus parfait du monde.\nSur votre droite, vous pourrez voir\nrien qui n\'est plus parfait que\nserveur qui defie la perfection.\nSur votre gauche, pareil.\nNenufar.\nOgnon.";
 
-    sleep(1);
-    write(socket_client, message_bienvenue, strlen(message_bienvenue) + 1);
-    
     while (1) {
-	// TODO
+	socket_client = accept(socket_serveur, NULL, NULL);
+	if (socket_client == -1) {
+	    perror("accept");
+	    return EXIT_FAILURE;
+	}
+
+	switch (fork()) {
+	case -1:
+	    perror("fork");
+	    return -1;
+	case 0:
+	    /* On peut maintenant dialoguer avec le client */
+	    sleep(1);
+	    write(socket_client, message_bienvenue, strlen(message_bienvenue) + 1);
+	    while(1);
+	default:
+	    close(socket_client);
+	}
     }
 
     return EXIT_SUCCESS;
