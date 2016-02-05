@@ -28,6 +28,10 @@ int creer_serveur(int port) {
         return EXIT_FAILURE; 
     }
 
+    int optval = 1;
+    if (setsockopt(socket_serveur, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1)
+	perror("Can not set SO_REUSEADDR option");
+    
     if (bind(socket_serveur, (struct sockaddr *) &saddr, sizeof(saddr)) == -1) {
         perror("bind socker_serveur");
         return EXIT_FAILURE;
