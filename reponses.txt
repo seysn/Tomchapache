@@ -1,4 +1,4 @@
-Question 1: Si on quitte le serveur et on le relance, le message de bienvenue ne s'affiche plus.
+Question 1: Si on quitte le serveur et on le relance, l'appel à bind echoue.
 Question 2: Si l'on ajoute un délai avant l'envoi, et qu'on execute la commande "nc -z 127.0.0.1 8080" le message de bienvenue ne s'affiche pas et la connexion se ferme. Le client n'attend pas la réponse du serveur.
 Question 3: Quand on lance la commande telnet on obtient l'erreur "Trying ::1... telnet: Unable to connect to remote host: Connection refused" car on lui donne une IPv6.
 Question 4: Quand on veut lancer deux clients simultanément, on obtient l'erreur:"bind socker_serveur: Address already in use" car le port est déjà utilisé.
