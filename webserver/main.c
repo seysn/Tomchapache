@@ -31,7 +31,7 @@ int main()
     const char * message_bienvenue = "Bonjour, bienvenue sur le serveur\nle plus parfait du monde.\nSur votre droite, vous pourrez voir\nrien qui n\'est plus parfait que\nserveur qui defie la perfection.\nSur votre gauche, pareil.\nNenufar.\nOgnon.";
 
     sleep(1);
-    write(socket_client, message_bienvenue, strlen(message_bienvenue));
+    write(socket_client, message_bienvenue, strlen(message_bienvenue) + 1);
     
     while (1) {
 	// TODO
