@@ -28,10 +28,11 @@ int main()
     }
 
     /* On peut maintenant dialoguer avec le client */
-    const char * message_bienvenue = "Bonjour, bienvenue sur mon serveur\n";
-    sleep(1); /* Question 2 => attendre 1 sec avant l'envoi du message */
-    write(socket_client, message_bienvenue, strlen(message_bienvenue));
+    const char * message_bienvenue = "Bonjour, bienvenue sur le serveur\nle plus parfait du monde.\nSur votre droite, vous pourrez voir\nrien qui n\'est plus parfait que\nserveur qui defie la perfection.\nSur votre gauche, pareil.\nNenufar.\nOgnon.";
 
+    sleep(1);
+    write(socket_client, message_bienvenue, strlen(message_bienvenue));
+    
     while (1) {
 	// TODO
     }
