@@ -21,6 +21,8 @@ int main()
 	return EXIT_FAILURE;
     }
 
+    initialiser_signaux();
+    
     socket_client = accept(socket_serveur, NULL, NULL);
     if (socket_client == -1) {
 	perror("accept");
