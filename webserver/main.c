@@ -13,6 +13,7 @@
 #include <sys/socket.h>
 
 #include "socket.h"
+#include "signal.h"
 
 int main() 
 {
@@ -34,12 +35,12 @@ int main()
 	switch (fork()) {
 	case -1:
 	    perror("fork");
-	    return -1;
+	    return EXIT_FAILURE;
 	case 0:
 	    /* On peut maintenant dialoguer avec le client */
 	    sleep(1);
 	    write(socket_client, message_bienvenue, strlen(message_bienvenue) + 1);
-	    while(1);
+	    return EXIT_SUCCESS;
 	default:
 	    close(socket_client);
 	}
