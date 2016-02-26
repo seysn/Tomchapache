@@ -27,7 +27,7 @@ int main()
     }
 
     initialiser_signaux();
-    const char * message_bienvenue = "Bonjour, bienvenue sur le serveur\nle plus parfait du monde.\nSur votre droite, vous pourrez voir\nrien qui n\'est plus parfait que\nserveur qui defie la perfection.\nSur votre gauche, pareil.\nNenufar.\nOgnon.\n";
+    //    const char * message_bienvenue = "Bonjour, bienvenue sur le serveur\nle plus parfait du monde.\nSur votre droite, vous pourrez voir\nrien qui n\'est plus parfait que\nserveur qui defie la perfection.\nSur votre gauche, pareil.\nNenufar.\nOgnon.\n";
 
     while (1) {
         socket_client = accept(socket_serveur, NULL, NULL);
@@ -42,8 +42,8 @@ int main()
                 return EXIT_FAILURE;
             case 0:
                 /* On peut maintenant dialoguer avec le client */
-                sleep(1);
-                write(socket_client, message_bienvenue, strlen(message_bienvenue) + 1);
+                //sleep(1);
+                //write(socket_client, message_bienvenue, strlen(message_bienvenue) + 1);
                 
                 fgets(buf, BUF_SIZE, fsocket);
 
