@@ -1,0 +1,19 @@
+.\" Manpage for Tomchapache.
+.\" https://github.com/seysn/Tomchapache
+.\" Contact nicolas.mauger@etudiant.univ-lille1.fr or nicolas.seys@etudiant.univ-lille1.fr to correct errors or typos.
+.\" You can compile this document with "gtbl Tomchapache | geqn -Tascii | gtbl | groff -Tascii -man"
+.TH man 1 "26 Fev. 2016" "1.0" "Tomchapache man page"
+.SH NAME
+Tomchapache \- Awesome web server
+.SH SYNOPSIS
+tomchapache [OPTION]...
+.SH DESCRIPTION
+Tomchapache is a perfect web server.
+.SH OPTIONS
+The Tomchapache does not take any options.
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Nicolas Seys <https://github.com/seysn/>
+.br
+Nicolas Mauger <https://github.com/maugern/>
