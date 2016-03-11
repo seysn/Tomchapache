@@ -18,8 +18,8 @@ char *fgets_or_exit (char *buffer, int size, FILE *stream) {
     if ((temp = fgets(buffer, size, stream)) != NULL) {
         return temp;
     }
-    fclose(stream);
-    exit(1);
+    //fclose(stream);
+     exit(1);
 }
 
 int parse_http_request (const char *request_line, http_request *request) {
@@ -41,7 +41,7 @@ int parse_http_request (const char *request_line, http_request *request) {
                 if (strncmp("/", parser, 1) != 0 ) {
                     return 0;
                 }
-                request->url = parser;
+                *(request->url) = *parser;
                 break;
             case 3:
                 if (strcmp("HTTP/1.0", parser) != 0 && strcmp("HTTP/1.1", parser) != 0) {
@@ -67,15 +67,6 @@ int parse_http_request (const char *request_line, http_request *request) {
 void skip_header (FILE *client) {
     char buf[BUFF_SIZE];
     // TODO Il faut réutiliser gets_or_exit ?
-    while (fgets(buf, BUFF_SIZE, client) != NULL && !strcmp(buf, "\r\n") &&
-            !strcmp(buf, "\n"))
-    }
+    while (fgets(buf, BUFF_SIZE, client) != NULL && !strcmp(buf, "\r\n") && !strcmp(buf, "\n"));
 }
 
-
-
-   /*
-   void send_status (FILE *client, int code, const char *reason_phrase);
-   void send_reponse (FILE *client, int code, const char *reason_phrase,
-   const char *message_body);
-   */
