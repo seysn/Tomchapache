@@ -46,22 +46,23 @@ int main()
                 /* On peut maintenant dialoguer avec le client */
                 
                 fgets_or_exit(buf, BUF_SIZE, fsocket);
-                printf("buff = %s\n", buf);
                 http_request request;
 
                 int bad_request = parse_http_request(buf, &request);
                 skip_header(fsocket);
-                printf("OK\n");
                 
-                if (bad_request == 0)
+                if (bad_request == 0) {
                     send_response(fsocket, 400, "Bad Request", "Bad Request\r\n");
-                else if (request.method == HTTP_UNSUPPORTED)
+                }
+                else if (request.method == HTTP_UNSUPPORTED) {
                     send_response(fsocket, 405, "Method not allowed", "Method not allowed\r\n");
-                else if (strcmp(request.url, "/") == 0)
+                }
+                else if (strcmp(request.url, "/") == 0) {
                     send_response(fsocket, 200, "OK", message_bienvenue);
-                else
+                }
+                else {
                     send_response(fsocket, 404, "Not Found", "Not Found\r\n");
-
+                }
                 return EXIT_SUCCESS;
             default:
                 close(socket_client);

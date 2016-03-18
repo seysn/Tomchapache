@@ -14,9 +14,8 @@
 #define BUFF_SIZE 1024
 
 char *fgets_or_exit (char *buffer, int size, FILE *stream) {
-    char* temp;
-    if ((temp = fgets(buffer, size, stream)) != NULL) {
-        return temp;
+    if (fgets(buffer, size, stream) != NULL) {
+        return buffer;
     }
     //fclose(stream);
      exit(1);
@@ -38,10 +37,11 @@ int parse_http_request (const char *request_line, http_request *request) {
                 request->method = HTTP_GET;
                 break;
             case 2:
-                if (strncmp("/", parser, 1) != 0 ) {
+                //if (strcmp("/", parser) != 0 ) {
+                if (parser[0] == '/') {
                     return 0;
                 }
-                *(request->url) = *parser;
+                strcpy(request->url, parser);
                 break;
             case 3:
                 if (strcmp("HTTP/1.0", parser) != 0 && strcmp("HTTP/1.1", parser) != 0) {
@@ -67,6 +67,5 @@ int parse_http_request (const char *request_line, http_request *request) {
 void skip_header (FILE *client) {
     char buf[BUFF_SIZE];
     // TODO Il faut réutiliser gets_or_exit ?
-    while (fgets(buf, BUFF_SIZE, client) != NULL && !strcmp(buf, "\r\n") && !strcmp(buf, "\n"));
+    while (fgets_or_exit(buf, BUFF_SIZE, client) != NULL && !strcmp(buf, "\r\n") && !strcmp(buf, "\n"));
 }
-
