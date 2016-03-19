@@ -17,5 +17,5 @@ void send_status (FILE *client, int code, const char *reason_phrase){
 
 void send_response (FILE *client, int code, const char *reason_phrase, const char *message_body){
     send_status(client, code, reason_phrase);
-    fprintf(client, "Connection: close\r\nContent-Length: %zu\r\n\r\n%s", strlen(message_body), message_body);
+    fprintf(client, "Connection: close\r\nContent-length: %zu\r\n\r\n%s", strlen(message_body), message_body);
 }

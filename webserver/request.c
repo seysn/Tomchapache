@@ -37,14 +37,13 @@ int parse_http_request (const char *request_line, http_request *request) {
                 request->method = HTTP_GET;
                 break;
             case 2:
-                //if (strcmp("/", parser) != 0 ) {
-                if (parser[0] == '/') {
+                if (parser[0] != '/') {
                     return 0;
                 }
                 strcpy(request->url, parser);
                 break;
             case 3:
-                if (strcmp("HTTP/1.0", parser) != 0 && strcmp("HTTP/1.1", parser) != 0) {
+                if (strncmp("HTTP/1.0", parser, 8) != 0 && strncmp("HTTP/1.1", parser, 8) != 0) {
                     return 0;
                 }
                 request->minor_version = 1;
@@ -66,6 +65,5 @@ int parse_http_request (const char *request_line, http_request *request) {
 
 void skip_header (FILE *client) {
     char buf[BUFF_SIZE];
-    // TODO Il faut réutiliser gets_or_exit ?
-    while (fgets_or_exit(buf, BUFF_SIZE, client) != NULL && !strcmp(buf, "\r\n") && !strcmp(buf, "\n"));
+    while (fgets_or_exit(buf, BUFF_SIZE, client) != NULL && strcmp(buf, "\n") && strcmp(buf, "\r\n") != 0);
 }

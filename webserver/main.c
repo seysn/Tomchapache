@@ -29,7 +29,7 @@ int main()
     }
 
     initialiser_signaux();
-    const char * message_bienvenue = "Bonjour, bienvenue sur le serveur\nle plus parfait du monde.\nSur votre droite, vous pourrez voir\nrien qui n\'est plus parfait que\nserveur qui defie la perfection.\nSur votre gauche, pareil.\nNenufar.\nOgnon.\n";
+    const char * message_bienvenue = "Bonjour, bienvenue sur le serveur\nle plus parfait du monde.\nSur votre droite, vous pourrez voir\nrien qui n\'est plus parfait que\nle serveur qui defie la perfection.\nSur votre gauche, pareil.\nNenufar.\nOgnon.\r\n";
 
     while (1) {
         socket_client = accept(socket_serveur, NULL, NULL);
@@ -39,33 +39,35 @@ int main()
         }
         FILE *fsocket = fdopen(socket_client, "w+");
         switch (fork()) {
-            case -1:
-                perror("fork");
-                return EXIT_FAILURE;
-            case 0:
-                /* On peut maintenant dialoguer avec le client */
+	case -1:
+	    perror("fork");
+	    return EXIT_FAILURE;
+	case 0:
+	    /* On peut maintenant dialoguer avec le client */
                 
-                fgets_or_exit(buf, BUF_SIZE, fsocket);
-                http_request request;
+	    fgets_or_exit(buf, BUF_SIZE, fsocket);
+	    http_request request;
 
-                int bad_request = parse_http_request(buf, &request);
-                skip_header(fsocket);
+	    int bad_request = parse_http_request(buf, &request);
+	    skip_header(fsocket);
                 
-                if (bad_request == 0) {
-                    send_response(fsocket, 400, "Bad Request", "Bad Request\r\n");
-                }
-                else if (request.method == HTTP_UNSUPPORTED) {
-                    send_response(fsocket, 405, "Method not allowed", "Method not allowed\r\n");
-                }
-                else if (strcmp(request.url, "/") == 0) {
-                    send_response(fsocket, 200, "OK", message_bienvenue);
-                }
-                else {
-                    send_response(fsocket, 404, "Not Found", "Not Found\r\n");
-                }
-                return EXIT_SUCCESS;
-            default:
-                close(socket_client);
+	    if (bad_request == 0) {
+		send_response(fsocket, 400, "Bad Request", "Bad Request\r\n");
+	    }
+	    else if (request.method == HTTP_UNSUPPORTED) {
+		send_response(fsocket, 405, "Method not allowed", "Method not allowed\r\n");
+	    }
+	    else if (strcmp(request.url, "/") == 0) {
+		send_response(fsocket, 200, "OK", message_bienvenue);
+	    }
+	    else {
+		send_response(fsocket, 404, "Not Found", "Not Found\r\n");
+	    }
+	    fclose(fsocket);
+	    return EXIT_SUCCESS;
+	default:
+	    fclose(fsocket);
+	    close(socket_client);
         }
     }
 
