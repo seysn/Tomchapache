@@ -20,8 +20,8 @@
 
 #define BUF_SIZE 1024
 
-int main() 
-{   
+int main()
+{
     char buf[BUF_SIZE];
     int socket_serveur, socket_client;
     if((socket_serveur = creer_serveur(8080)) == EXIT_FAILURE) {
@@ -44,13 +44,13 @@ int main()
 	    return EXIT_FAILURE;
 	case 0:
 	    /* On peut maintenant dialoguer avec le client */
-                
+
 	    fgets_or_exit(buf, BUF_SIZE, fsocket);
 	    http_request request;
 
 	    int bad_request = parse_http_request(buf, &request);
 	    skip_header(fsocket);
-                
+
 	    if (bad_request == 0) {
 		send_response(fsocket, 400, "Bad Request", "Bad Request\r\n");
 	    }
@@ -63,6 +63,16 @@ int main()
 	    else {
 		send_response(fsocket, 404, "Not Found", "Not Found\r\n");
 	    }
+
+        // Servir du vrai contenu
+        int pid;
+        if ((pid = check_and_open(request.url, "/")) < 0){
+            send_response(fsocket, 404, "Not Found", "File Not Found\r\n");
+        } else {
+            // transmission du fichier au client
+            send_response(fsocket, 200, "OK", message_bienvenue);
+        }
+
 	    fclose(fsocket);
 	    return EXIT_SUCCESS;
 	default:

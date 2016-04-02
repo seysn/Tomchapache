@@ -2,8 +2,10 @@
  * MAUGER & SEYS - Nicolas
  * Tomchapache
  * 11 mar. 2016
- * response.h 
+ * response.h
  **************************/
 
 void send_status (FILE *client, int code, const char *reason_phrase);
 void send_response (FILE *client, int code, const char *reason_phrase, const char *message_body);
+int get_file_size (int fd);
+int copy(int in, int out);

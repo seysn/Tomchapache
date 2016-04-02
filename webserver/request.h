@@ -20,4 +20,5 @@ typedef struct {
 char *fgets_or_exit (char *buffer, int size, FILE * stream);
 int parse_http_request (const char *request_line, http_request *request);
 void skip_header (FILE *client);
- 
+char *rewrite_url (char *url);
+int check_and_open (const char *url, const char *document_root);

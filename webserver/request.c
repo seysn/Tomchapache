@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 #include "request.h"
 
@@ -62,8 +64,21 @@ int parse_http_request (const char *request_line, http_request *request) {
     return 1;
 }
 
-
 void skip_header (FILE *client) {
     char buf[BUFF_SIZE];
     while (fgets_or_exit(buf, BUFF_SIZE, client) != NULL && strcmp(buf, "\n") && strcmp(buf, "\r\n") != 0);
+}
+
+char *rewrite_url (char *url) {
+    char * tmp;
+    tmp = strtok(url, "?");
+    return tmp;
+}
+
+int check_and_open (const char *url, const char *document_root) {
+    char * tmp_url = strdup(url);
+    char * tmp_document_root = strdup(document_root);
+    tmp_url = rewrite_url(tmp_url);
+    tmp_url = strcat(tmp_document_root, tmp_url);
+    return open(tmp_url, O_RDONLY);
 }
